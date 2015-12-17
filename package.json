@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "~4.9.0",
+    "mongodb": "^2.0.52",
+    "mongoose": "^4.3.1"
+  }
+}
