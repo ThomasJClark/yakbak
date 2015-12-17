@@ -1,9 +1,30 @@
 var yakbak = new YakBak();
 
+var newBaks = document.getElementById("newBaks");
+var topBaks = document.getElementById("topBaks");
 var baksElement = document.getElementById("baks");
+var bakText = document.getElementById("bakText");
+var submitBak = document.getElementById("submitBak");
+
+var reloadFunc = yakbak.topBaks;
+
+newBaks.addEventListener("click", function() {
+  reloadFunc = yakbak.newBaks;
+  reload();
+});
+
+topBaks.addEventListener("click", function() {
+  reloadFunc = yakbak.topBaks;
+  reload();
+});
+
+submitBak.addEventListener("click", function() {
+  yakbak.postBak(bakText.value, reload);
+  bakText.value = "";
+});
 
 function reload() {
-  yakbak.topBaks(function(baks) {
+  reloadFunc(function(baks) {
     baksElement.innerHTML = ""
     baks.forEach(function(bak) {
       var bakElement = document.createElement("tr");
@@ -18,12 +39,12 @@ function reload() {
 
       var upvote = document.createElement("td");
       upvote.innerHTML = "<a href='#'>upvote</a>";
-      upvote.onclick = function() { yakbak.vote(bak._id, +1, reload); };
+      upvote.addEventListener("click", function() { yakbak.vote(bak._id, +1, reload); });
       bakElement.appendChild(upvote);
 
       var downvote = document.createElement("td");
       downvote.innerHTML = "<a href='#'>downvote</a>";
-      downvote.onclick = function() { yakbak.vote(bak._id, -1, reload); };
+      downvote.addEventListener("click", function() { yakbak.vote(bak._id, -1, reload); });
       bakElement.appendChild(downvote);
 
       baksElement.appendChild(bakElement);
