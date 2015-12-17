@@ -2,7 +2,7 @@ var express    = require("express")
   , bodyParser = require("body-parser")
   , mongoose   = require("mongoose");
 
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || "mongodb://localhost/test");
 
 /**
  * A "Bak" is an anonymous post that can be voted on.
@@ -142,5 +142,13 @@ db.once("open", function() {
     res.end();
   });
 
-  app.listen(process.env.PORT || 3000);
+  // Get the address and port based on the environment variables that
+  // OpenShift gives us, or reasonable defaults if running locally.
+  var addr = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+  var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+
+  // Start the app
+  app.listen(port, addr, function() {
+      console.log("Listening on %s:%d ...", addr, port);
+  });
 });
