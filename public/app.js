@@ -47,6 +47,15 @@ function reload() {
       downvote.addEventListener("click", function() { yakbak.vote(bak._id, -1, reload); });
       bakElement.appendChild(downvote);
 
+      // Highlight the upvote or downvote button to indicate if the user has
+      // already upvoted or downvoted this post.
+      var uid = yakbak.uid();
+      if (bak.upvoters.indexOf(uid) != -1) {
+        upvote.style.opacity = 0.5;
+      } else if (bak.downvoters.indexOf(uid) != -1) {
+        downvote.style.opacity = 0.5;
+      }
+
       baksElement.appendChild(bakElement);
     });
   })

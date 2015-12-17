@@ -2,18 +2,17 @@
  * Utility methods for interacting with the YakBak REST API.
  */
 function YakBak() {
-
-  function uid() {
-    /* This is stored in localStorage so the same ID will be used if someone
-      accesses the site again later. */
-    if (typeof(window.localStorage["uid"]) == "undefined") {
-      window.localStorage["uid"] = Math.floor(Math.random() * 100000000);
-    }
-
-    return window.localStorage["uid"] | 0;
-  }
-
   return {
+    uid: function() {
+      /* This is stored in localStorage so the same ID will be used if someone
+        accesses the site again later. */
+      if (typeof(window.localStorage["uid"]) == "undefined") {
+        window.localStorage["uid"] = Math.floor(Math.random() * 100000000);
+      }
+
+      return window.localStorage["uid"] | 0;
+    },
+
     /**
      * Get a list of the most highly voted Baks
      */
@@ -66,7 +65,7 @@ function YakBak() {
         }
       };
       req.setRequestHeader("Content-Type", "application/json");
-      req.send(JSON.stringify({userId: uid(), text: text}));
+      req.send(JSON.stringify({userId: this.uid(), text: text}));
     },
 
     /**
@@ -85,7 +84,7 @@ function YakBak() {
         }
       };
       req.setRequestHeader("Content-Type", "application/json");
-      req.send(JSON.stringify({userId: uid(), bakId: id, vote: vote}));
+      req.send(JSON.stringify({userId: this.uid(), bakId: id, vote: vote}));
     },
   }
 }
