@@ -61,6 +61,17 @@ db.once("open", function() {
   });
 
   /**
+   * GET all of the Baks from a particular user
+   */
+  app.get("/baks/mine", function(req, res) {
+    console.log(req.query.userId);
+    Bak.find({userId: req.query.userId}).sort("-date").limit(10).exec(function(err, baks) {
+      if (err) return res.end(String(err));
+      res.json(baks);
+      res.end();
+    });
+  });
+  /**
    * POST a new Bak
    */
   app.post("/baks", function(req, res) {

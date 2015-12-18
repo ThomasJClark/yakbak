@@ -18,6 +18,11 @@ topBaks.addEventListener("click", function() {
   reload();
 });
 
+myBaks.addEventListener("click", function() {
+  reloadFunc = yakbak.myBaks.bind(yakbak);
+  reload();
+});
+
 submitBak.addEventListener("click", function() {
   yakbak.postBak(bakText.value, reload);
   bakText.value = "";
@@ -27,7 +32,6 @@ function reload() {
   reloadFunc(function(baks) {
     baksElement.innerHTML = ""
     baks.forEach(function(bak) {
-
       var upvote = document.createElement("span");
       upvote.className = "mega-octicon octicon-arrow-up vote";
       upvote.addEventListener("click", function() { yakbak.vote(bak._id, +1, reload); });

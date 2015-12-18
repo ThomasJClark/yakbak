@@ -50,6 +50,25 @@ function YakBak() {
     },
 
     /**
+     * Get a list of the Baks submitted by this user
+     */
+    myBaks: function(callback) {
+      var req = new XMLHttpRequest();
+      req.open("GET", "/baks/mine?userId=" + this.uid());
+      req.onreadystatechange = function(evt) {
+        if (req.readyState == XMLHttpRequest.DONE) {
+          if (req.status == 200) {
+            console.log(req.response);
+            callback(JSON.parse(req.response));
+          } else {
+            console.error(req.response);
+          }
+        }
+      };
+      req.send();
+    },
+
+    /**
      * Post a new Bak
      */
     postBak: function(text, callback) {
